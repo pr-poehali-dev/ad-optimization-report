@@ -376,13 +376,90 @@ export default function Index() {
         <div className="max-w-6xl mx-auto">
           <SectionTitle icon="Filter" label="Минус-слова" title="Минусация нецелевых запросов" />
 
+          {/* Daily workflow */}
+          <div className="rounded-3xl p-8 border border-purple-500/30 mb-10" style={{ background: "rgba(88,28,135,0.08)" }}>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ background: "rgba(168,85,247,0.15)" }}>
+                <Icon name="RefreshCw" size={18} className="text-purple-400" />
+              </div>
+              <div>
+                <h3 className="text-base font-semibold text-white">Ежедневная работа по оптимизации</h3>
+                <p className="text-xs text-slate-500">Минусация, анализ статистики и корректировка стратегии — каждый день</p>
+              </div>
+              <span className="ml-auto text-xs text-purple-400 border border-purple-500/30 px-3 py-1 rounded-full flex-shrink-0">каждый день</span>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-4">
+              {[
+                {
+                  step: "01",
+                  icon: "BarChart2",
+                  color: "#06b6d4",
+                  title: "Анализ статистики",
+                  items: [
+                    "Открываем отчёт по поисковым запросам в Яндекс.Директ",
+                    "Смотрим, по каким запросам были клики за последние 1–3 дня",
+                    "Фильтруем запросы с нулевыми или слабыми конверсиями",
+                    "Оцениваем стоимость клика и расход по каждому запросу",
+                  ]
+                },
+                {
+                  step: "02",
+                  icon: "Search",
+                  color: "#a855f7",
+                  title: "Проверка запросов",
+                  items: [
+                    "Проверяем смысл каждого запроса — целевой ли пользователь",
+                    "Выявляем «мусорные» запросы: DIY, фото, чертежи, схемы",
+                    "Ищем информационные запросы без намерения купить",
+                    "Выявляем запросы по смежным, но нерелевантным товарам",
+                  ]
+                },
+                {
+                  step: "03",
+                  icon: "Settings",
+                  color: "#f97316",
+                  title: "Корректировка кампании",
+                  items: [
+                    "Добавляем нецелевые запросы в список минус-слов",
+                    "При необходимости корректируем ставки по регионам",
+                    "Проверяем обучение стратегии — достаточно ли данных",
+                    "Фиксируем изменения и сравниваем с предыдущим периодом",
+                  ]
+                },
+              ].map((block) => (
+                <div key={block.step} className="rounded-2xl p-5 border border-slate-700/60" style={{ background: "rgba(15,23,42,0.6)" }}>
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-2xl font-oswald font-bold" style={{ color: block.color + "60" }}>{block.step}</span>
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: block.color + "18" }}>
+                      <Icon name={block.icon as any} size={15} style={{ color: block.color }} />
+                    </div>
+                    <h4 className="text-sm font-semibold text-white">{block.title}</h4>
+                  </div>
+                  <ul className="space-y-2">
+                    {block.items.map((item, j) => (
+                      <li key={j} className="flex items-start gap-2 text-xs text-slate-400 leading-relaxed">
+                        <div className="w-1 h-1 rounded-full mt-1.5 flex-shrink-0" style={{ background: block.color }} />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-5 rounded-xl p-4 border border-slate-700/40 text-sm text-slate-400 leading-relaxed" style={{ background: "rgba(15,23,42,0.5)" }}>
+              <strong className="text-white">Зачем это делать ежедневно:</strong> алгоритм РСЯ обучается на данных в режиме реального времени. Чем быстрее убираются нецелевые запросы — тем чище аудитория, тем точнее алгоритм понимает портрет покупателя и тем эффективнее расходуется бюджет. Задержка даже на 2–3 дня означает слитые деньги на нецелевые показы.
+            </div>
+          </div>
+
           <div className="grid md:grid-cols-2 gap-8 mb-10">
             <div>
               <h3 className="text-base font-semibold text-slate-300 mb-4 flex items-center gap-2">
                 <Icon name="X" size={16} className="text-red-400" />
                 Добавленные минус-слова
               </h3>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 mb-4">
                 {minusWords.map((w) => (
                   <span key={w}
                     className="px-3 py-1.5 rounded-lg text-red-300 text-sm font-mono transition-colors border border-red-800/50"
@@ -391,22 +468,43 @@ export default function Index() {
                   </span>
                 ))}
               </div>
+              <div className="rounded-xl p-4 border border-slate-700/40 text-xs text-slate-500 leading-relaxed" style={{ background: "rgba(15,23,42,0.5)" }}>
+                Все слова относятся к нецелевым намерениям: изготовление своими руками («сделать», «руками», «подручных»), информационные запросы («фото», «сорта»), смежные материалы («ротанг», «оцинкованный», «цемент», «прозрачные»), нормативные документы («окпд»).
+              </div>
             </div>
 
             <div className="space-y-4">
-              {[
-                { icon: "HelpCircle", color: "text-cyan-400", title: "Что такое минусация?", text: "Минус-слова — это запросы, по которым объявление не будет показано. Это позволяет исключить нецелевую аудиторию и не тратить бюджет впустую." },
-                { icon: "Search", color: "text-purple-400", title: "Как это делается?", text: "Анализируются поисковые запросы показа. Выявляются запросы типа «сделать своими руками», «фото», «ротанг» — люди ищут DIY-контент, а не покупку. Такие запросы добавляются в минус-список." },
-                { icon: "TrendingDown", color: "text-green-400", title: "Эффект минусации", text: "Снижается доля нецелевых кликов → CTR растёт → алгоритм получает более качественные данные → стоимость конверсии снижается." },
-              ].map((item, i) => (
-                <div key={i} className="rounded-2xl p-5 border border-slate-700/60" style={{ background: "rgba(15,23,42,0.6)" }}>
-                  <h4 className="text-sm font-semibold text-white mb-2 flex items-center gap-2">
-                    <Icon name={item.icon as any} size={14} className={item.color} />
-                    {item.title}
-                  </h4>
-                  <p className="text-slate-400 text-sm leading-relaxed">{item.text}</p>
+              <div className="rounded-2xl p-5 border border-slate-700/60" style={{ background: "rgba(15,23,42,0.6)" }}>
+                <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+                  <Icon name="TrendingDown" size={14} className="text-green-400" />
+                  Эффект минусации на показатели
+                </h4>
+                <div className="space-y-2">
+                  {[
+                    { label: "Нецелевые клики", before: "высокая доля", after: "снижается", dir: "down" },
+                    { label: "CTR кампании", before: "низкий", after: "растёт", dir: "up" },
+                    { label: "Качество аудитории", before: "смешанная", after: "целевая", dir: "up" },
+                    { label: "Стоимость конверсии", before: "завышена", after: "снижается", dir: "down" },
+                  ].map((row, i) => (
+                    <div key={i} className="flex items-center gap-3 text-xs">
+                      <span className="text-slate-500 w-36 flex-shrink-0">{row.label}</span>
+                      <span className="text-slate-600">{row.before}</span>
+                      <Icon name="ArrowRight" size={12} className="text-slate-700 flex-shrink-0" />
+                      <span className={row.dir === "up" ? "text-green-400 font-medium" : "text-orange-400 font-medium"}>{row.after}</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+
+              <div className="rounded-2xl p-5 border border-slate-700/60" style={{ background: "rgba(15,23,42,0.6)" }}>
+                <h4 className="text-sm font-semibold text-white mb-2 flex items-center gap-2">
+                  <Icon name="Repeat" size={14} className="text-orange-400" />
+                  Как меняется стратегия
+                </h4>
+                <p className="text-slate-400 text-sm leading-relaxed">
+                  По мере накопления данных стратегия уточняется: алгоритм лучше понимает, кто покупает, и начинает показывать рекламу именно таким пользователям. Это снижает цену конверсии со временем — кампания становится эффективнее с каждой неделей работы.
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -504,24 +602,7 @@ export default function Index() {
             </div>
           </div>
 
-          {/* Other placeholders */}
-          <div className="grid md:grid-cols-2 gap-5">
-            {[
-              { label: "Настройки региональности", icon: "Map", desc: "Полный список регионов из настроек кампании в Директе" },
-              { label: "Настройки стратегии", icon: "BarChart3", desc: "Скриншот стратегии и ставок из интерфейса Яндекс.Директ" },
-            ].map((item, i) => (
-              <div key={i}
-                className="border-2 border-dashed border-slate-700/50 rounded-3xl p-8 flex flex-col items-center justify-center gap-3 text-center hover:border-orange-500/30 transition-all duration-300 group">
-                <div className="w-12 h-12 rounded-2xl flex items-center justify-center transition-colors border border-slate-700 group-hover:border-orange-500/30"
-                  style={{ background: "rgba(30,41,59,0.8)" }}>
-                  <Icon name={item.icon as any} size={22} className="text-slate-600 group-hover:text-orange-400 transition-colors" />
-                </div>
-                <p className="font-semibold text-slate-400 text-sm">{item.label}</p>
-                <p className="text-slate-600 text-xs">{item.desc}</p>
-                <span className="text-xs text-slate-600 border border-slate-700 px-3 py-1 rounded-full">Ожидает загрузки</span>
-              </div>
-            ))}
-          </div>
+
         </div>
       </section>
 
