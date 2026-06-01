@@ -64,10 +64,14 @@ const strategies = [
 ];
 
 const metrics = [
-  { label: "Клики", value: "—", unit: "шт", icon: "MousePointerClick", color: "#f97316" },
-  { label: "CTR", value: "—", unit: "%", icon: "BarChart2", color: "#06b6d4" },
-  { label: "Стоимость клика", value: "—", unit: "₽", icon: "Coins", color: "#a855f7" },
-  { label: "Цена конверсии", value: "600–700", unit: "₽", icon: "Target", color: "#22c55e" },
+  { label: "Показы", value: "215 981", unit: "шт", icon: "Eye", color: "#f97316" },
+  { label: "Клики", value: "5 799", unit: "шт", icon: "MousePointerClick", color: "#06b6d4" },
+  { label: "CTR", value: "2,69", unit: "%", icon: "BarChart2", color: "#a855f7" },
+  { label: "Стоимость клика", value: "4,72", unit: "₽", icon: "Coins", color: "#fbbf24" },
+  { label: "Конверсии", value: "25", unit: "шт", icon: "MessageCircle", color: "#22c55e" },
+  { label: "Цена конверсии", value: "1 094,70", unit: "₽", icon: "Target", color: "#f43f5e" },
+  { label: "Продажи", value: "6", unit: "шт", icon: "ShoppingBag", color: "#8b5cf6" },
+  { label: "Сумма продаж", value: "81 800", unit: "₽", icon: "TrendingUp", color: "#10b981" },
 ];
 
 const results = [
@@ -178,27 +182,37 @@ export default function Index() {
 
       {/* METRICS BAR */}
       <section className="px-6 md:px-16 py-10 border-y border-slate-800/60">
-        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
-          {metrics.map((m) => (
-            <div key={m.label}
-              className="rounded-2xl p-5 flex flex-col gap-2 transition-all duration-300 border border-slate-800 hover:border-orange-500/40"
-              style={{ background: "rgba(15,23,42,0.8)" }}>
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-slate-500 uppercase tracking-widest">{m.label}</span>
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center"
-                  style={{ background: m.color + "22" }}>
-                  <Icon name={m.icon as any} size={16} style={{ color: m.color }} />
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {metrics.map((m) => (
+              <div key={m.label}
+                className="rounded-2xl p-5 flex flex-col gap-2 transition-all duration-300 border border-slate-800 hover:border-slate-600 group"
+                style={{ background: "rgba(15,23,42,0.8)" }}>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-slate-500 uppercase tracking-widest">{m.label}</span>
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center"
+                    style={{ background: m.color + "22" }}>
+                    <Icon name={m.icon as any} size={16} style={{ color: m.color }} />
+                  </div>
+                </div>
+                <div className="flex items-end gap-1">
+                  <span className="text-2xl font-oswald font-bold" style={{ color: m.color }}>{m.value}</span>
+                  <span className="text-slate-500 text-sm mb-0.5">{m.unit}</span>
                 </div>
               </div>
-              <div className="flex items-end gap-1">
-                <span className="text-3xl font-oswald font-bold" style={{ color: m.color }}>{m.value}</span>
-                <span className="text-slate-500 text-sm mb-1">{m.unit}</span>
-              </div>
-              {m.value === "—" && (
-                <span className="text-[10px] text-slate-600">будет добавлено</span>
-              )}
-            </div>
-          ))}
+            ))}
+          </div>
+          {/* conversion funnel hint */}
+          <div className="mt-4 rounded-xl px-5 py-3 flex flex-wrap items-center gap-x-6 gap-y-2 border border-slate-800" style={{ background: "rgba(15,23,42,0.6)" }}>
+            <span className="text-xs text-slate-500">Воронка:</span>
+            <span className="text-xs text-slate-400"><span className="text-white font-semibold">215 981</span> показов</span>
+            <span className="text-slate-700">→</span>
+            <span className="text-xs text-slate-400"><span className="text-cyan-400 font-semibold">5 799</span> кликов (CTR 2,69%)</span>
+            <span className="text-slate-700">→</span>
+            <span className="text-xs text-slate-400"><span className="text-green-400 font-semibold">25</span> конверсий</span>
+            <span className="text-slate-700">→</span>
+            <span className="text-xs text-slate-400"><span className="text-purple-400 font-semibold">6</span> продаж на <span className="text-emerald-400 font-semibold">81 800 ₽</span></span>
+          </div>
         </div>
       </section>
 
@@ -286,17 +300,33 @@ export default function Index() {
             </div>
           </div>
 
-          {/* Screenshot from Direktt */}
-          <div className="mb-8 rounded-2xl overflow-hidden border border-slate-700/60">
-            <div className="px-4 py-3 border-b border-slate-700/60 flex items-center gap-2" style={{ background: "rgba(15,23,42,0.8)" }}>
-              <Icon name="Monitor" size={14} className="text-slate-500" />
-              <span className="text-xs text-slate-500">Яндекс.Директ — Страны, области, города</span>
+          {/* Region groups */}
+          <div className="grid md:grid-cols-2 gap-5 mb-8">
+            <div className="rounded-2xl p-5 border border-slate-700/60" style={{ background: "rgba(15,23,42,0.6)" }}>
+              <h4 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4">Базовые регионы (были изначально)</h4>
+              <div className="flex flex-wrap gap-2">
+                {["Москва", "Санкт-Петербург", "Воронежская обл.", "Нижний Новгород", "Пермь", "Уфа", "Казань",
+                  "Саратовская обл.", "Волгоградская обл.", "Краснодар", "Сочи", "Ростовская обл.", "Красноярск",
+                  "Новосибирск", "Омск", "Екатеринбург", "Тюмень", "ХМАО — Югра", "Челябинская обл.", "ЯНАО"
+                ].map(r => (
+                  <span key={r} className="px-2.5 py-1 rounded-lg text-xs text-slate-400 border border-slate-700" style={{ background: "rgba(30,41,59,0.5)" }}>{r}</span>
+                ))}
+              </div>
             </div>
-            <img
-              src="https://cdn.poehali.dev/projects/4a618134-dd09-4a1d-b8b0-4191c4210d95/bucket/9f36def1-169c-4ef2-927b-2b3de74d5a79.jpg"
-              alt="Скриншот региональности из Яндекс.Директ"
-              className="w-full"
-            />
+            <div className="rounded-2xl p-5 border border-orange-500/30" style={{ background: "rgba(249,115,22,0.05)" }}>
+              <h4 className="text-xs font-bold uppercase tracking-widest text-orange-500 mb-4">Новые регионы — добавлены</h4>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {["Самарская область", "Ижевск", "Ульяновск", "Геленджик", "Новороссийск", "Иркутск", "Махачкала"].map(r => (
+                  <span key={r} className="px-2.5 py-1 rounded-lg text-xs text-orange-300 border border-orange-500/40 font-medium" style={{ background: "rgba(249,115,22,0.1)" }}>{r}</span>
+                ))}
+              </div>
+              <div className="space-y-2 text-xs text-slate-400 border-t border-orange-500/20 pt-3">
+                <p><span className="text-orange-300 font-medium">Геленджик, Новороссийск</span> — курортные зоны, много частных домов и дач → высокий спрос на уличные вазоны в сезон</p>
+                <p><span className="text-orange-300 font-medium">Самарская обл., Ижевск, Ульяновск</span> — Поволжье, активный загородный сегмент</p>
+                <p><span className="text-orange-300 font-medium">Иркутск</span> — Сибирь, расширение географии охвата</p>
+                <p><span className="text-orange-300 font-medium">Махачкала</span> — Кавказ, тёплый климат → длинный садовый сезон</p>
+              </div>
+            </div>
           </div>
 
           {/* Region tags */}
@@ -442,7 +472,7 @@ export default function Index() {
             </div>
           </div>
 
-          {/* Video placeholder */}
+          {/* Video */}
           <div className="mb-6">
             <div className="flex items-center gap-3 mb-5">
               <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ background: "rgba(6,182,212,0.15)" }}>
@@ -450,16 +480,27 @@ export default function Index() {
               </div>
               <div>
                 <h3 className="text-base font-semibold text-white">Видео-креатив — РСЯ Вазоны</h3>
-                <p className="text-xs text-slate-500">Видео, добавленное в кампанию</p>
+                <p className="text-xs text-slate-500">Видео добавлено в кампанию РСЯ для показа в рекламной сети Яндекса</p>
               </div>
+              <span className="ml-auto text-xs text-cyan-400 border border-cyan-500/30 px-3 py-1 rounded-full">Видео</span>
             </div>
-            <div className="border-2 border-dashed border-cyan-800/40 rounded-3xl p-12 flex flex-col items-center justify-center gap-3 text-center hover:border-cyan-500/40 transition-all duration-300">
-              <div className="w-16 h-16 rounded-2xl flex items-center justify-center border border-cyan-800/40" style={{ background: "rgba(6,182,212,0.08)" }}>
-                <Icon name="PlayCircle" size={32} className="text-cyan-600" />
+            <div className="rounded-2xl overflow-hidden border border-slate-700/60" style={{ background: "rgba(15,23,42,0.8)" }}>
+              <div className="px-4 py-3 border-b border-slate-700/60 flex items-center gap-2">
+                <Icon name="Play" size={13} className="text-cyan-400" />
+                <span className="text-xs text-slate-500">РСЯ Вазоны — видеообъявление</span>
               </div>
-              <p className="font-semibold text-slate-300 text-sm">Видео-файл</p>
-              <p className="text-slate-600 text-xs max-w-xs">Видеоролик, добавленный в кампанию РСЯ Вазоны. Пришлите файл — добавим в отчёт.</p>
-              <span className="text-xs text-cyan-700 border border-cyan-900/60 px-3 py-1 rounded-full">Ожидает загрузки</span>
+              <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+                <iframe
+                  src="https://drive.google.com/file/d/1xPD4TFtASkXKXkrRgqLimr2HsLS6YopX/preview"
+                  className="absolute inset-0 w-full h-full"
+                  allow="autoplay"
+                  title="Видео-креатив РСЯ Вазоны"
+                />
+              </div>
+              <div className="px-5 py-4 text-sm text-slate-400 leading-relaxed">
+                <strong className="text-white">Зачем добавлять видео в РСЯ:</strong> видеообъявления получают более высокий CTR по сравнению с обычными баннерами — они привлекают внимание движением и лучше передают продукт.
+                Алгоритм Яндекса автоматически определяет, когда показывать видео, а когда — статичный баннер, выбирая более эффективный формат для каждого пользователя.
+              </div>
             </div>
           </div>
 
