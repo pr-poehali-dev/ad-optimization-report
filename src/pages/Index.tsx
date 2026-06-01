@@ -589,7 +589,7 @@ export default function Index() {
               </div>
               <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
                 <iframe
-                  src="https://drive.google.com/file/d/1xPD4TFtASkXKXkrRgqLimr2HsLS6YopX/preview"
+                  src="https://www.youtube.com/embed/FmIHVW9BYyE"
                   className="absolute inset-0 w-full h-full"
                   allow="autoplay"
                   title="Видео-креатив РСЯ Вазоны"
