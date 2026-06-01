@@ -54,6 +54,33 @@ const results = [
   { icon: "TrendingUp", title: "Цель — рост конверсий", text: "Все изменения направлены на увеличение числа оформленных заказов при контролируемой стоимости.", color: "#f97316" },
 ];
 
+function CreativeCard({ url, label, desc, index }: { url: string; label: string; desc: string; index: number }) {
+  return (
+    <div className="group relative rounded-2xl overflow-hidden border border-slate-700/60 hover:border-orange-500/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+      style={{ boxShadow: "0 0 0 0 rgba(249,115,22,0)" }}>
+      <div className="relative overflow-hidden bg-slate-800" style={{ aspectRatio: "9/16" }}>
+        <img
+          src={url}
+          alt={label}
+          className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          style={{ background: "linear-gradient(to top, rgba(10,14,26,0.8) 0%, transparent 50%)" }} />
+        <div className="absolute top-2 left-2">
+          <span className="text-[10px] font-bold text-white px-2 py-0.5 rounded-full"
+            style={{ background: "rgba(249,115,22,0.9)" }}>
+            #{index}
+          </span>
+        </div>
+      </div>
+      <div className="p-3 border-t border-slate-700/60" style={{ background: "rgba(15,23,42,0.9)" }}>
+        <p className="text-xs font-semibold text-white">{label}</p>
+        <p className="text-[11px] text-slate-500 mt-0.5">{desc}</p>
+      </div>
+    </div>
+  );
+}
+
 function SectionTitle({ icon, label, title }: { icon: string; label: string; title: string }) {
   return (
     <div className="mb-10">
@@ -293,33 +320,100 @@ export default function Index() {
         <div className="max-w-6xl mx-auto">
           <SectionTitle icon="Image" label="Скриншоты" title="Визуальные материалы кампании" />
 
-          <div className="grid md:grid-cols-2 gap-6">
+          {/* Creatives block */}
+          <div className="mb-12">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ background: "rgba(249,115,22,0.15)" }}>
+                <Icon name="Layers" size={16} className="text-orange-400" />
+              </div>
+              <div>
+                <h3 className="text-base font-semibold text-white">Рекламные объявления — РСЯ Вазоны</h3>
+                <p className="text-xs text-slate-500">Изображения, добавленные в кампанию РСЯ</p>
+              </div>
+              <span className="ml-auto text-xs text-orange-400 border border-orange-500/30 px-3 py-1 rounded-full">5 креативов</span>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+              {[
+                {
+                  url: "https://cdn.poehali.dev/projects/4a618134-dd09-4a1d-b8b0-4191c4210d95/bucket/89c4d0c2-0127-4c00-8b94-4cb23792cddf.jpg",
+                  label: "Объявление #1",
+                  desc: "Вазы — чёрные, мрамор + цветы",
+                },
+                {
+                  url: "https://cdn.poehali.dev/projects/4a618134-dd09-4a1d-b8b0-4191c4210d95/bucket/0147174c-90b0-465c-8c59-d9d898a8e336.jpg",
+                  label: "Объявление #2",
+                  desc: "Сухоцветы, бежевые вазоны",
+                },
+                {
+                  url: "https://cdn.poehali.dev/projects/4a618134-dd09-4a1d-b8b0-4191c4210d95/bucket/ff200d3a-3a2c-44e6-bd38-37b82e8af7d3.jpg",
+                  label: "Объявление #3",
+                  desc: "Вазоны с цветами, тёмный фон",
+                },
+                {
+                  url: "https://cdn.poehali.dev/projects/4a618134-dd09-4a1d-b8b0-4191c4210d95/bucket/b40319cd-6763-4278-9a98-7046e2ae2daa.jpg",
+                  label: "Объявление #4",
+                  desc: "Пластиковые вазоны премиум",
+                },
+                {
+                  url: "https://cdn.poehali.dev/projects/4a618134-dd09-4a1d-b8b0-4191c4210d95/bucket/164fd3b0-f9d6-4b36-8d31-119e9411be12.jpg",
+                  label: "Объявление #5",
+                  desc: "Сухоцветы + бежевая гамма v2",
+                },
+              ].map((item, i) => (
+                <CreativeCard key={i} {...item} index={i + 1} />
+              ))}
+            </div>
+
+            <div className="mt-6 rounded-2xl p-5 border border-slate-700/50 text-sm text-slate-400 leading-relaxed" style={{ background: "rgba(15,23,42,0.6)" }}>
+              <strong className="text-white block mb-1">Что было сделано:</strong>
+              В кампанию РСЯ «Вазоны» добавлены новые изображения с разными визуальными концепциями:
+              тёмные глянцевые вазоны с живыми цветами и светлые матовые вазоны с сухоцветами в тёплой гамме.
+              Разнообразие форматов позволяет алгоритму Яндекса тестировать, какой визуал лучше привлекает
+              внимание целевой аудитории в разных сегментах, и автоматически увеличивать показы более
+              эффективных вариантов.
+            </div>
+          </div>
+
+          {/* Video placeholder */}
+          <div className="mb-6">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ background: "rgba(6,182,212,0.15)" }}>
+                <Icon name="Video" size={16} className="text-cyan-400" />
+              </div>
+              <div>
+                <h3 className="text-base font-semibold text-white">Видео-креатив — РСЯ Вазоны</h3>
+                <p className="text-xs text-slate-500">Видео, добавленное в кампанию</p>
+              </div>
+            </div>
+            <div className="border-2 border-dashed border-cyan-800/40 rounded-3xl p-12 flex flex-col items-center justify-center gap-3 text-center hover:border-cyan-500/40 transition-all duration-300">
+              <div className="w-16 h-16 rounded-2xl flex items-center justify-center border border-cyan-800/40" style={{ background: "rgba(6,182,212,0.08)" }}>
+                <Icon name="PlayCircle" size={32} className="text-cyan-600" />
+              </div>
+              <p className="font-semibold text-slate-300 text-sm">Видео-файл</p>
+              <p className="text-slate-600 text-xs max-w-xs">Видеоролик, добавленный в кампанию РСЯ Вазоны. Пришлите файл — добавим в отчёт.</p>
+              <span className="text-xs text-cyan-700 border border-cyan-900/60 px-3 py-1 rounded-full">Ожидает загрузки</span>
+            </div>
+          </div>
+
+          {/* Other placeholders */}
+          <div className="grid md:grid-cols-2 gap-5">
             {[
-              { label: "Редактирование картинок — РСЯ Вазоны", icon: "ImageIcon", desc: "Скриншоты изменений в рекламных баннерах" },
-              { label: "Видео-креатив — РСЯ Вазоны", icon: "Video", desc: "Видео, добавленное в кампанию РСЯ Вазоны" },
-              { label: "Настройки региональности", icon: "Map", desc: "Полный список регионов из настроек кампании" },
-              { label: "Стратегия и ставки", icon: "BarChart3", desc: "Скриншот настроек стратегии в интерфейсе" },
+              { label: "Настройки региональности", icon: "Map", desc: "Полный список регионов из настроек кампании в Директе" },
+              { label: "Настройки стратегии", icon: "BarChart3", desc: "Скриншот стратегии и ставок из интерфейса Яндекс.Директ" },
             ].map((item, i) => (
               <div key={i}
-                className="border-2 border-dashed border-slate-700 rounded-3xl p-10 flex flex-col items-center justify-center gap-3 text-center hover:border-orange-500/50 transition-all duration-300 group min-h-[200px]">
-                <div className="w-14 h-14 rounded-2xl flex items-center justify-center transition-colors border border-slate-700 group-hover:border-orange-500/40"
+                className="border-2 border-dashed border-slate-700/50 rounded-3xl p-8 flex flex-col items-center justify-center gap-3 text-center hover:border-orange-500/30 transition-all duration-300 group">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center transition-colors border border-slate-700 group-hover:border-orange-500/30"
                   style={{ background: "rgba(30,41,59,0.8)" }}>
-                  <Icon name={item.icon as any} size={26} className="text-slate-500 group-hover:text-orange-400 transition-colors" />
+                  <Icon name={item.icon as any} size={22} className="text-slate-600 group-hover:text-orange-400 transition-colors" />
                 </div>
-                <div>
-                  <p className="font-semibold text-slate-300 text-sm">{item.label}</p>
-                  <p className="text-slate-600 text-xs mt-1">{item.desc}</p>
-                </div>
-                <span className="text-xs text-slate-600 border border-slate-700 px-3 py-1 rounded-full">
-                  Ожидает загрузки
-                </span>
+                <p className="font-semibold text-slate-400 text-sm">{item.label}</p>
+                <p className="text-slate-600 text-xs">{item.desc}</p>
+                <span className="text-xs text-slate-600 border border-slate-700 px-3 py-1 rounded-full">Ожидает загрузки</span>
               </div>
             ))}
           </div>
-
-          <p className="text-slate-600 text-xs mt-6 text-center">
-            Скриншоты и видео будут добавлены после загрузки материалов
-          </p>
         </div>
       </section>
 
