@@ -7,10 +7,35 @@ const minusWords = [
   "сделать", "сорта", "фото", "цемент"
 ];
 
-const regions = [
-  "Геленджик", "Новороссийск", "Ульяновск", "Самарская область",
-  "Ижевск", "Иркутск", "Махачкала", "Краснодар", "Ростов-на-Дону",
-  "Волгоград", "Казань", "Уфа", "Пермь", "Екатеринбург"
+// Регионы: true = новые (добавлены в ходе оптимизации), false = были изначально
+const regions: { name: string; isNew: boolean }[] = [
+  { name: "Москва", isNew: false },
+  { name: "Санкт-Петербург", isNew: false },
+  { name: "Воронежская область", isNew: false },
+  { name: "Нижний Новгород", isNew: false },
+  { name: "Пермь", isNew: false },
+  { name: "Уфа", isNew: false },
+  { name: "Казань", isNew: false },
+  { name: "Саратовская область", isNew: false },
+  { name: "Волгоградская область", isNew: false },
+  { name: "Краснодар", isNew: false },
+  { name: "Сочи", isNew: false },
+  { name: "Ростовская область", isNew: false },
+  { name: "Красноярск", isNew: false },
+  { name: "Новосибирск", isNew: false },
+  { name: "Омск", isNew: false },
+  { name: "Екатеринбург", isNew: false },
+  { name: "Тюмень", isNew: false },
+  { name: "Ханты-Мансийский АО — Югра", isNew: false },
+  { name: "Челябинская область", isNew: false },
+  { name: "Ямало-Ненецкий АО", isNew: false },
+  { name: "Самарская область", isNew: true },
+  { name: "Ижевск", isNew: true },
+  { name: "Ульяновск", isNew: true },
+  { name: "Геленджик", isNew: true },
+  { name: "Новороссийск", isNew: true },
+  { name: "Иркутск", isNew: true },
+  { name: "Махачкала", isNew: true },
 ];
 
 const strategies = [
@@ -245,31 +270,73 @@ export default function Index() {
         <div className="max-w-6xl mx-auto">
           <SectionTitle icon="MapPin" label="Регионы" title="Целевая региональность кампаний" />
 
-          <p className="text-slate-400 text-sm mb-8 max-w-2xl">
-            Актуализирован список регионов показа. Добавлены города с высоким сезонным спросом.
-            Отмечены <span className="text-orange-400 font-medium">новые регионы</span>.
-          </p>
+          {/* Stats row */}
+          <div className="flex flex-wrap gap-4 mb-8">
+            <div className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-700/60" style={{ background: "rgba(15,23,42,0.6)" }}>
+              <div className="w-2 h-2 rounded-full bg-slate-500" />
+              <span className="text-sm text-slate-300"><strong className="text-white">20</strong> регионов — были изначально</span>
+            </div>
+            <div className="flex items-center gap-2 px-4 py-2 rounded-xl border border-orange-500/40" style={{ background: "rgba(249,115,22,0.08)" }}>
+              <div className="w-2 h-2 rounded-full bg-orange-400" />
+              <span className="text-sm text-orange-300"><strong className="text-orange-400">7</strong> регионов — добавлено новых</span>
+            </div>
+            <div className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-700/60" style={{ background: "rgba(15,23,42,0.6)" }}>
+              <Icon name="MapPin" size={13} className="text-slate-400" />
+              <span className="text-sm text-slate-300"><strong className="text-white">27</strong> регионов итого</span>
+            </div>
+          </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 mb-10">
-            {regions.map((r, i) => (
-              <div key={r}
-                className={`rounded-2xl px-4 py-3 flex items-center gap-2 border transition-all hover:scale-105 duration-200
-                  ${i < 8
+          {/* Screenshot from Direktt */}
+          <div className="mb-8 rounded-2xl overflow-hidden border border-slate-700/60">
+            <div className="px-4 py-3 border-b border-slate-700/60 flex items-center gap-2" style={{ background: "rgba(15,23,42,0.8)" }}>
+              <Icon name="Monitor" size={14} className="text-slate-500" />
+              <span className="text-xs text-slate-500">Яндекс.Директ — Страны, области, города</span>
+            </div>
+            <img
+              src="https://cdn.poehali.dev/projects/4a618134-dd09-4a1d-b8b0-4191c4210d95/bucket/9f36def1-169c-4ef2-927b-2b3de74d5a79.jpg"
+              alt="Скриншот региональности из Яндекс.Директ"
+              className="w-full"
+            />
+          </div>
+
+          {/* Region tags */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 mb-8">
+            {regions.map((r) => (
+              <div key={r.name}
+                className={`rounded-2xl px-3 py-2.5 flex items-center gap-2 border transition-all hover:scale-105 duration-200
+                  ${r.isNew
                     ? "border-orange-500/50 text-orange-300"
-                    : "border-slate-700 text-slate-300"}`}
-                style={{ background: i < 8 ? "rgba(249,115,22,0.08)" : "rgba(30,41,59,0.5)" }}>
-                <div className={`w-2 h-2 rounded-full flex-shrink-0 ${i < 8 ? "bg-orange-400" : "bg-slate-500"}`} />
-                <span className="text-sm font-medium">{r}</span>
-                {i < 8 && (
-                  <span className="ml-auto text-[9px] text-orange-400 font-bold uppercase">new</span>
+                    : "border-slate-700 text-slate-400"}`}
+                style={{ background: r.isNew ? "rgba(249,115,22,0.08)" : "rgba(30,41,59,0.4)" }}>
+                <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${r.isNew ? "bg-orange-400" : "bg-slate-600"}`} />
+                <span className="text-xs font-medium leading-tight">{r.name}</span>
+                {r.isNew && (
+                  <span className="ml-auto text-[8px] text-orange-400 font-bold uppercase tracking-wide flex-shrink-0">new</span>
                 )}
               </div>
             ))}
           </div>
 
-          <div className="rounded-2xl p-5 text-sm text-slate-400 border border-slate-700/60" style={{ background: "rgba(15,23,42,0.6)" }}>
-            <Icon name="Info" size={14} className="inline mr-2 text-slate-500" />
-            Полный список регионов будет уточнён после получения скриншота из настроек кампании.
+          {/* What changed explanation */}
+          <div className="grid md:grid-cols-2 gap-5">
+            <div className="rounded-2xl p-5 border border-slate-700/60" style={{ background: "rgba(15,23,42,0.6)" }}>
+              <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+                <Icon name="History" size={14} className="text-slate-400" />
+                Какие регионы были изначально
+              </h4>
+              <p className="text-slate-400 text-sm leading-relaxed">
+                Крупные города-миллионники и промышленные центры: Москва, Санкт-Петербург, Краснодар, Новосибирск, Екатеринбург, Казань, Уфа, Пермь и другие. Это базовое ядро с высоким интернет-трафиком и сложившимся спросом на садовые товары.
+              </p>
+            </div>
+            <div className="rounded-2xl p-5 border border-orange-500/30" style={{ background: "rgba(249,115,22,0.05)" }}>
+              <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+                <Icon name="PlusCircle" size={14} className="text-orange-400" />
+                Что добавили и зачем
+              </h4>
+              <p className="text-slate-400 text-sm leading-relaxed">
+                Добавлены города с активным сезонным спросом на вазоны: <span className="text-orange-300">Геленджик, Новороссийск</span> — курортные зоны с большим числом частных домов; <span className="text-orange-300">Самарская обл., Ижевск, Ульяновск</span> — промышленные города Поволжья; <span className="text-orange-300">Иркутск, Махачкала</span> — расширение охвата в Сибири и на Кавказе.
+              </p>
+            </div>
           </div>
         </div>
       </section>
