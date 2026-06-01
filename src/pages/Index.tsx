@@ -147,7 +147,7 @@ export default function Index() {
             <span className="text-xs font-semibold tracking-[0.3em] uppercase text-orange-400 border border-orange-500/40 px-3 py-1 rounded-full">
               Яндекс.Директ
             </span>
-            <span className="text-xs text-slate-500">Май — Июнь 2026</span>
+
           </div>
 
           <h1 className="font-oswald text-5xl md:text-7xl font-bold leading-tight mb-4">
